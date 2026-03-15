@@ -127,3 +127,4 @@ export const EXERCISES = [
 { id: 129, type: "Logique intermédiaire – Temps & travail", difficulty: 2, question: "Une machine produit 120 pièces en 3 h. Combien en 5 h ?", answer: "200", explanation: "40 pièces/h → 40 × 5 = 200." },
 
 { id: 130, type: "Logique intermédiaire – Temps & travail", difficulty: 2, question: "Un élève fait un exercice en 12 minutes. Combien en 1 h ?", answer: "5", explanation: "60 / 12 = 5 exercices." }
+   ];
