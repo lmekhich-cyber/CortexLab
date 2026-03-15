@@ -1,46 +1,37 @@
-/* =========================================================
-   CORTEXLAB ULTRA – MODULE DAILY
-   Programme quotidien (5 minutes)
-========================================================= */
-
 import { EXERCISES } from "../data/exercises.js";
-import { Cards } from "../ui/cards.js";
-import { XP } from "../core/xp.js";
 
 export const Daily = {
   init() {
     const box = document.getElementById("dailyChallenge");
+    if (!box) return;
 
-    const today = new Date().toDateString();
-    const saved = localStorage.getItem("dailyDate");
+    // On prend 4 exercices variés
+    const types = ["Mémoire", "Logique verbale", "Suites faciles", "Analogies"];
+    const chosen = [];
 
-    if (saved !== today) {
-      const daily = this.generate();
-      localStorage.setItem("daily", JSON.stringify(daily));
-      localStorage.setItem("dailyDate", today);
-    }
+    types.forEach(t => {
+      const pool = EXERCISES.filter(e => e.type === t);
+      if (pool.length) chosen.push(pool[0]);
+    });
 
-    const challenge = JSON.parse(localStorage.getItem("daily"));
-    Cards.render(box, challenge);
-  },
+    box.innerHTML = chosen.map(ex => `
+      <div class="card">
+        <div class="card-title">${ex.type}</div>
+        <p class="card-question">Exercice : ${ex.question}</p>
+        <button class="btn btn-ghost" data-id="${ex.id}">Afficher la solution</button>
+        <div class="card-answer" id="daily-${ex.id}" style="display:none;">
+          <strong>Réponse :</strong> ${ex.answer}<br>
+          <strong>Explication :</strong> ${ex.explanation}
+        </div>
+      </div>
+    `).join("");
 
-  generate() {
-    const pick = type =>
-      EXERCISES.filter(e => e.type === type)[
-        Math.floor(Math.random() * EXERCISES.filter(e => e.type === type).length)
-      ];
-
-    const daily = [
-      pick("Mémoire"),
-      pick("Logique verbale"),
-      pick("Suites faciles"),
-      pick("Analogies")
-    ];
-
-    // Bonus XP quotidien
-    XP.value += 20;
-    localStorage.setItem("xp", XP.value);
-
-    return daily;
+    box.querySelectorAll("button[data-id]").forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.getAttribute("data-id");
+        const ans = document.getElementById(`daily-${id}`);
+        ans.style.display = ans.style.display === "none" ? "block" : "none";
+      };
+    });
   }
 };
