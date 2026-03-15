@@ -2,20 +2,28 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>CortexLab – Entraîne ton esprit. Dépasse-toi. !!!! Développement en cours !!!!</title>
+  <title>CortexLab Ultra – Entraîne ton esprit</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
+  <!-- Bannière développement -->
+  <div class="dev-banner">
+    🚧 Ce site est actuellement en développement. Certaines fonctionnalités peuvent évoluer. 🚧
+  </div>
+
+  <!-- Navigation -->
   <nav class="top-nav">
     <div class="nav-logo">
-      <div class="logo-title">CortexLab</div>
+      <div class="logo-title">CortexLab Ultra</div>
       <div class="logo-slogan">Entraîne ton esprit. Dépasse-toi.</div>
     </div>
+
     <div class="nav-links">
       <a href="#entrainement">Entraînement</a>
-      <a href="#aleatoire">Exercice aléatoire</a>
+      <a href="#aleatoire">Aléatoire</a>
       <a href="#parcours">Parcours</a>
       <a href="#qi">Tests QI</a>
       <a href="#quiz">Quiz</a>
@@ -25,131 +33,136 @@
     </div>
   </nav>
 
-  <main>
-    <header class="hero">
-      <div class="badge">
-        <span class="badge-dot"></span>
-        <span>Centre d’entraînement cognitif</span>
+  <!-- HERO -->
+  <header class="hero">
+    <h1>
+      Développe ton raisonnement avec
+      <span class="highlight">CortexLab Ultra</span>
+    </h1>
+
+    <p class="hero-sub">
+      Un espace premium pour progresser en logique, en raisonnement, en mémoire
+      et en intelligence abstraite. Entraîne-toi chaque jour, mesure tes progrès
+      et dépasse tes limites.
+    </p>
+
+    <div class="hero-buttons">
+      <button class="btn btn-primary" id="startTraining">Commencer l’entraînement</button>
+      <button class="btn btn-ghost" id="startRandom">Exercice aléatoire</button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-label">Exercices</span>
+        <span class="stat-value" id="statExercices">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Sessions</span>
+        <span class="stat-value" id="statSessions">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Score global</span>
+        <span class="stat-value" id="statScore">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Entraînement libre -->
+  <section id="entrainement" class="section">
+    <h2>Entraînement libre</h2>
+    <p class="section-intro">
+      Choisis un type d’exercice ou explore librement. Tous les exercices sont générés automatiquement.
+    </p>
+
+    <div class="filters">
+      <div class="filters-left">
+        <span class="filters-label">Catégories</span>
+        <div id="categoryFilters" class="pill-group"></div>
       </div>
 
-      <h1>
-        Développe ton raisonnement avec
-        <span class="highlight">CortexLab Ultra</span>
-      </h1>
-
-      <p class="hero-sub">
-        Un espace premium pour progresser en logique, en raisonnement, en mémoire
-        et en intelligence abstraite. Entraîne-toi chaque jour, mesure tes progrès,
-        et dépasse tes limites.
-      </p>
-
-      <div class="hero-buttons">
-        <button class="btn btn-primary" id="startTraining">Commencer l’entraînement</button>
-        <button class="btn btn-ghost" id="startRandom">Exercice aléatoire</button>
+      <div class="filters-right">
+        <span>Tri :</span>
+        <select id="sortExercises">
+          <option value="difficulty">Difficulté</option>
+          <option value="type">Type</option>
+          <option value="random">Aléatoire</option>
+        </select>
       </div>
+    </div>
 
-      <div class="hero-stats">
-        <div class="stat">
-          <span class="stat-label">Exercices</span>
-          <span class="stat-value" id="statExercices">0</span>
-        </div>
-        <div class="stat">
-          <span class="stat-label">Sessions</span>
-          <span class="stat-value" id="statSessions">0</span>
-        </div>
-        <div class="stat">
-          <span class="stat-label">Score global</span>
-          <span class="stat-value" id="statScore">0</span>
-        </div>
-      </div>
-    </header>
+    <div id="exerciseContainer" class="cards-grid"></div>
+  </section>
 
-    <section id="entrainement" class="section">
-      <h2>Entraînement libre</h2>
-      <p class="section-intro">
-        Choisis un type d’exercice ou explore librement. Tous les exercices sont générés automatiquement.
-      </p>
+  <!-- Exercice aléatoire -->
+  <section id="aleatoire" class="section">
+    <h2>Exercice aléatoire</h2>
+    <p class="section-intro">
+      Réponds à l’exercice, vérifie ta réponse, et progresse pas à pas.
+    </p>
+    <div id="randomExerciseBox" class="card"></div>
+  </section>
 
-      <div class="filters">
-        <div class="filters-left">
-          <span class="filters-label">Catégories</span>
-          <div id="categoryFilters" class="pill-group"></div>
-        </div>
-        <div class="filters-right">
-          <span>Tri :</span>
-          <select id="sortExercises">
-            <option value="difficulty">Difficulté</option>
-            <option value="type">Type</option>
-            <option value="random">Aléatoire</option>
-          </select>
-        </div>
-      </div>
+  <!-- Parcours progressif -->
+  <section id="parcours" class="section">
+    <h2>Parcours progressif</h2>
+    <p class="section-intro">
+      Avance niveau par niveau. Chaque niveau débloque le suivant.
+    </p>
+    <div id="parcoursContainer" class="cards-grid"></div>
+  </section>
 
-      <div id="exerciseContainer" class="cards-grid"></div>
-    </section>
+  <!-- Tests QI -->
+  <section id="qi" class="section">
+    <h2>Tests de QI</h2>
+    <p class="section-intro">
+      Entraîne-toi aux formats classiques : matrices, suites complexes, analogies, mémoire.
+    </p>
+    <div id="qiContainer" class="cards-grid"></div>
+  </section>
 
-    <section id="aleatoire" class="section">
-      <h2>Exercice aléatoire</h2>
-      <p class="section-intro">
-        Réponds à l’exercice, vérifie ta réponse, et progresse pas à pas.
-      </p>
-      <div id="randomExerciseBox" class="card"></div>
-    </section>
+  <!-- Quiz -->
+  <section id="quiz" class="section">
+    <h2>Quiz interactif</h2>
+    <p class="section-intro">
+      10 questions aléatoires. Score immédiat.
+    </p>
+    <div id="quizContainer"></div>
+  </section>
 
-    <section id="parcours" class="section">
-      <h2>Parcours progressif</h2>
-      <p class="section-intro">
-        Avance niveau par niveau. Chaque niveau débloque le suivant.
-      </p>
-      <div id="parcoursContainer" class="cards-grid"></div>
-    </section>
+  <!-- Examen -->
+  <section id="examen" class="section">
+    <h2>Examen chronométré</h2>
+    <p class="section-intro">
+      20 questions, un timer, un score final et une analyse de tes erreurs.
+    </p>
+    <div id="examContainer"></div>
+  </section>
 
-    <section id="qi" class="section">
-      <h2>Tests de QI</h2>
-      <p class="section-intro">
-        Entraîne-toi aux formats classiques : matrices, suites complexes, analogies, mémoire.
-      </p>
-      <div id="qiContainer" class="cards-grid"></div>
-    </section>
+  <!-- Défi quotidien -->
+  <section id="defi" class="section">
+    <h2>Défi quotidien</h2>
+    <p class="section-intro">
+      Un exercice unique chaque jour. Reviens demain pour le suivant.
+    </p>
+    <div id="dailyChallenge" class="cards-grid"></div>
+  </section>
 
-    <section id="quiz" class="section">
-      <h2>Quiz interactif</h2>
-      <p class="section-intro">
-        10 questions aléatoires. Score immédiat.
-      </p>
-      <div id="quizContainer" class="quiz-box"></div>
-    </section>
+  <!-- Pédagogie -->
+  <section id="pedagogie" class="section">
+    <h2>Comprendre & progresser</h2>
+    <p class="section-intro">
+      Méthodes, conseils, erreurs classiques, stratégies de raisonnement.
+    </p>
+    <div id="pedagoContainer" class="cards-grid"></div>
+  </section>
 
-    <section id="examen" class="section">
-      <h2>Examen chronométré</h2>
-      <p class="section-intro">
-        20 questions, un timer, un score final et une analyse de tes erreurs.
-      </p>
-      <div id="examContainer" class="exam-box"></div>
-    </section>
-
-    <section id="defi" class="section">
-      <h2>Défi quotidien</h2>
-      <p class="section-intro">
-        Un exercice unique chaque jour. Reviens demain pour le suivant.
-      </p>
-      <div id="dailyChallenge" class="card"></div>
-    </section>
-
-    <section id="pedagogie" class="section">
-      <h2>Comprendre & progresser</h2>
-      <p class="section-intro">
-        Méthodes, conseils, erreurs classiques, stratégies de raisonnement.
-      </p>
-      <div id="pedagoContainer" class="cards-grid"></div>
-    </section>
-  </main>
-
+  <!-- Footer -->
   <footer class="footer">
-    <span>CortexLab Ultra – Version Premium</span>
-    <span>Développé pour progresser chaque jour</span>
+    CortexLab Ultra – Version Premium • Développé pour progresser chaque jour
   </footer>
 
   <script type="module" src="main.js"></script>
+</body>
+</html>
 </body>
 </html>
