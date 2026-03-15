@@ -6,142 +6,45 @@
 
 /* =========================================================
    1. BASE DE DONNÉES DES EXERCICES
-   Chaque exercice possède :
-   - id
-   - type
-   - difficulty
-   - question
-   - answer
-   - explanation
 ========================================================= */
 
 const exercises = [
+  { id: 1, type: "Suites faciles", difficulty: 1, question: "2, 4, 6, 8, ?", answer: "10", explanation: "Suite +2." },
+  { id: 2, type: "Suites faciles", difficulty: 1, question: "1, 3, 5, 7, ?", answer: "9", explanation: "Suite +2." },
+  { id: 3, type: "Suites faciles", difficulty: 1, question: "5, 10, 15, 20, ?", answer: "25", explanation: "Suite +5." },
 
-  /* ------------------------------
-     SUITES NUMÉRIQUES – FACILES
-  ------------------------------ */
-  {
-    id: 1,
-    type: "Suites faciles",
-    difficulty: 1,
-    question: "2, 4, 6, 8, ?",
-    answer: "10",
-    explanation: "Suite +2."
-  },
-  {
-    id: 2,
-    type: "Suites faciles",
-    difficulty: 1,
-    question: "1, 3, 5, 7, ?",
-    answer: "9",
-    explanation: "Suite +2."
-  },
-  {
-    id: 3,
-    type: "Suites faciles",
-    difficulty: 1,
-    question: "5, 10, 15, 20, ?",
-    answer: "25",
-    explanation: "Suite +5."
-  },
+  { id: 20, type: "Suites moyennes", difficulty: 2, question: "3, 6, 12, 24, ?", answer: "48", explanation: "Suite ×2." },
+  { id: 21, type: "Suites moyennes", difficulty: 2, question: "7, 10, 16, 25, 37, ?", answer: "52", explanation: "+3, +6, +9, +12…" },
 
-  /* ------------------------------
-     SUITES NUMÉRIQUES – MOYENNES
-  ------------------------------ */
-  {
-    id: 20,
-    type: "Suites moyennes",
-    difficulty: 2,
-    question: "3, 6, 12, 24, ?",
-    answer: "48",
-    explanation: "Suite ×2."
-  },
-  {
-    id: 21,
-    type: "Suites moyennes",
-    difficulty: 2,
-    question: "7, 10, 16, 25, 37, ?",
-    answer: "52",
-    explanation: "+3, +6, +9, +12…"
-  },
+  { id: 40, type: "Suites difficiles", difficulty: 3, question: "3, 5, 9, 17, 33, ?", answer: "65", explanation: "×2 − 1." },
 
-  /* ------------------------------
-     SUITES NUMÉRIQUES – DIFFICILES
-  ------------------------------ */
-  {
-    id: 40,
-    type: "Suites difficiles",
-    difficulty: 3,
-    question: "3, 5, 9, 17, 33, ?",
-    answer: "65",
-    explanation: "×2 − 1."
-  },
+  { id: 60, type: "Analogies", difficulty: 1, question: "Lune est à nuit comme Soleil est à …", answer: "jour", explanation: "Relation naturelle opposée." },
 
-  /* ------------------------------
-     ANALOGIES
-  ------------------------------ */
-  {
-    id: 60,
-    type: "Analogies",
-    difficulty: 1,
-    question: "Lune est à nuit comme Soleil est à …",
-    answer: "jour",
-    explanation: "Relation naturelle opposée."
-  },
+  { id: 80, type: "Déductions", difficulty: 2, question: "Tous les A sont B. Aucun B n’est C. Donc…", answer: "Aucun A n’est C", explanation: "Syllogisme valide." },
 
-  /* ------------------------------
-     DÉDUCTIONS
-  ------------------------------ */
-  {
-    id: 80,
-    type: "Déductions",
-    difficulty: 2,
-    question: "Tous les A sont B. Aucun B n’est C. Donc…",
-    answer: "Aucun A n’est C",
-    explanation: "Syllogisme valide."
-  },
+  { id: 100, type: "Mathématiques", difficulty: 2, question: "Une voiture roule 2h à 60 km/h puis 1h à 80 km/h. Distance totale ?", answer: "200 km", explanation: "120 + 80 = 200." },
 
-  /* ------------------------------
-     PROBLÈMES MATHÉMATIQUES
-  ------------------------------ */
-  {
-    id: 100,
-    type: "Mathématiques",
-    difficulty: 2,
-    question: "Une voiture roule 2h à 60 km/h puis 1h à 80 km/h. Distance totale ?",
-    answer: "200 km",
-    explanation: "120 + 80 = 200."
-  },
-
-  /* ------------------------------
-     MÉMOIRE DE TRAVAIL
-  ------------------------------ */
-  {
-    id: 120,
-    type: "Mémoire",
-    difficulty: 1,
-    question: "Répéter à l’envers : 4 – 9 – 2 – 7 – 1",
-    answer: "1 – 7 – 2 – 9 – 4",
-    explanation: "Inversion de la séquence."
-  }
+  { id: 120, type: "Mémoire", difficulty: 1, question: "Répéter à l’envers : 4 – 9 – 2 – 7 – 1", answer: "1 – 7 – 2 – 9 – 4", explanation: "Inversion de la séquence." }
 ];
 
 /* =========================================================
-   2. STATISTIQUES UTILISATEUR (localStorage)
+   2. STATISTIQUES UTILISATEUR
 ========================================================= */
 
 const stats = {
   sessions: Number(localStorage.getItem("sessions") || 0),
   score: Number(localStorage.getItem("score") || 0),
+  randomSuccess: Number(localStorage.getItem("randomSuccess") || 0),
 
   save() {
     localStorage.setItem("sessions", this.sessions);
     localStorage.setItem("score", this.score);
+    localStorage.setItem("randomSuccess", this.randomSuccess);
   }
 };
 
 /* =========================================================
-   3. GÉNÉRATION DES CARTES D’EXERCICES
+   3. AFFICHAGE DES EXERCICES
 ========================================================= */
 
 function renderExercises(list) {
@@ -200,21 +103,76 @@ document.getElementById("sortExercises").addEventListener("change", e => {
   const mode = e.target.value;
   let sorted = [...exercises];
 
-  if (mode === "difficulty") {
-    sorted.sort((a, b) => a.difficulty - b.difficulty);
-  }
-  if (mode === "type") {
-    sorted.sort((a, b) => a.type.localeCompare(b.type));
-  }
-  if (mode === "random") {
-    sorted.sort(() => Math.random() - 0.5);
-  }
+  if (mode === "difficulty") sorted.sort((a, b) => a.difficulty - b.difficulty);
+  if (mode === "type") sorted.sort((a, b) => a.type.localeCompare(b.type));
+  if (mode === "random") sorted.sort(() => Math.random() - 0.5);
 
   renderExercises(sorted);
 });
 
 /* =========================================================
-   6. QUIZ INTERACTIF
+   6. MODULE : EXERCICE ALÉATOIRE (NOUVEAU)
+========================================================= */
+
+function startRandomExercise() {
+  const box = document.getElementById("randomExerciseBox");
+  const ex = exercises[Math.floor(Math.random() * exercises.length)];
+  let attempts = 0;
+
+  box.innerHTML = `
+    <div class="card-title">Exercice aléatoire – ${ex.type}</div>
+    <p><strong>Question :</strong> ${ex.question}</p>
+
+    <input id="randomInput" class="quiz-input" placeholder="Votre réponse">
+    <button class="btn btn-primary" id="randomCheck">Vérifier ma réponse</button>
+
+    <div id="randomFeedback" style="margin-top:10px; font-size:0.9rem;"></div>
+
+    <button class="btn btn-ghost" id="randomNew" style="margin-top:15px;">Nouvel exercice</button>
+  `;
+
+  const input = document.getElementById("randomInput");
+  const feedback = document.getElementById("randomFeedback");
+
+  document.getElementById("randomCheck").onclick = () => {
+    const user = (input.value || "").trim().toLowerCase();
+    const correct = ex.answer.toLowerCase();
+
+    if (!user) {
+      feedback.textContent = "Entre une réponse avant de vérifier.";
+      feedback.style.color = "#f97373";
+      return;
+    }
+
+    attempts++;
+
+    if (user === correct) {
+      feedback.textContent = "✅ Bravo, c’est la bonne réponse !";
+      feedback.style.color = "#4ade80";
+
+      stats.randomSuccess++;
+      stats.save();
+      updateStatsDisplay();
+    }
+    else if (attempts === 1) {
+      feedback.textContent = "❌ Ce n’est pas ça. Réessaie encore une fois.";
+      feedback.style.color = "#f97373";
+    }
+    else {
+      feedback.innerHTML = `
+        ❌ Toujours pas.<br>
+        <strong>Bonne réponse :</strong> ${ex.answer}<br>
+        <strong>Explication :</strong> ${ex.explanation}
+      `;
+      feedback.style.color = "#f97373";
+    }
+  };
+
+  document.getElementById("randomNew").onclick = startRandomExercise;
+}
+
+/* =========================================================
+   7. QUIZ INTERACTIF
 ========================================================= */
 
 function startQuiz() {
@@ -259,7 +217,7 @@ function startQuiz() {
 }
 
 /* =========================================================
-   7. EXAMEN CHRONOMÉTRÉ
+   8. EXAMEN CHRONOMÉTRÉ
 ========================================================= */
 
 function startExam() {
@@ -268,7 +226,7 @@ function startExam() {
 
   let index = 0;
   let score = 0;
-  let time = 180; // 3 minutes
+  let time = 180;
 
   const timer = setInterval(() => {
     time--;
@@ -313,7 +271,7 @@ function startExam() {
 }
 
 /* =========================================================
-   8. DÉFI QUOTIDIEN
+   9. DÉFI QUOTIDIEN
 ========================================================= */
 
 function loadDailyChallenge() {
@@ -341,7 +299,7 @@ function loadDailyChallenge() {
 }
 
 /* =========================================================
-   9. TABLEAU DE BORD
+   10. TABLEAU DE BORD
 ========================================================= */
 
 function updateStatsDisplay() {
@@ -351,7 +309,7 @@ function updateStatsDisplay() {
 }
 
 /* =========================================================
-   10. ÉVÉNEMENTS
+   11. ÉVÉNEMENTS
 ========================================================= */
 
 document.getElementById("startTraining").onclick = () => {
@@ -360,8 +318,8 @@ document.getElementById("startTraining").onclick = () => {
 };
 
 document.getElementById("startRandom").onclick = () => {
-  const ex = exercises[Math.floor(Math.random() * exercises.length)];
-  alert(`Exercice aléatoire :\n\n${ex.question}\n\nRéponse : ${ex.answer}`);
+  startRandomExercise();
+  window.location.href = "#aleatoire";
 };
 
 document.addEventListener("DOMContentLoaded", () => {
