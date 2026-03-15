@@ -1,0 +1,25 @@
+/* =========================================================
+   CORTEXLAB ULTRA – MAIN
+   Initialisation globale
+========================================================= */
+
+import { Training } from "./modules/training.js";
+import { Daily } from "./modules/daily.js";
+import { Revision } from "./modules/revision.js";
+import { Badges } from "./modules/badges.js";
+import { History } from "./modules/history.js";
+import { Exam } from "./modules/exam.js";
+import { Quiz } from "./modules/quiz.js";
+import { Random } from "./modules/random.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+  Training.init();
+  Daily.init();
+  Revision.init();
+  Badges.init();
+  History.init();
+
+  document.getElementById("startExam").onclick = () => Exam.start();
+  document.getElementById("startQuiz").onclick = () => Quiz.start();
+  document.getElementById("startRandom").onclick = () => Random.start();
+});
