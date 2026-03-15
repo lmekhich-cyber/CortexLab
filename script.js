@@ -111,7 +111,7 @@ document.getElementById("sortExercises").addEventListener("change", e => {
 });
 
 /* =========================================================
-   6. MODULE : EXERCICE ALÉATOIRE (NOUVEAU)
+   6. MODULE : EXERCICE ALÉATOIRE
 ========================================================= */
 
 function startRandomExercise() {
@@ -172,7 +172,7 @@ function startRandomExercise() {
 }
 
 /* =========================================================
-   7. QUIZ INTERACTIF
+   7. QUIZ INTERACTIF — CORRIGÉ AVEC RESTART
 ========================================================= */
 
 function startQuiz() {
@@ -206,11 +206,20 @@ function startQuiz() {
     quizBox.innerHTML = `
       <h3>Résultat : ${score}/10</h3>
       <p>${score >= 7 ? "Excellent !" : "Continue l’entraînement."}</p>
+
+      <button class="btn btn-primary" id="quizRestart" style="margin-top:15px;">
+        Recommencer le quiz
+      </button>
     `;
+
     stats.score += score;
     stats.sessions++;
     stats.save();
     updateStatsDisplay();
+
+    document.getElementById("quizRestart").onclick = () => {
+      startQuiz();
+    };
   }
 
   renderQuestion();
@@ -327,6 +336,4 @@ document.addEventListener("DOMContentLoaded", () => {
   renderExercises(exercises);
   loadDailyChallenge();
   updateStatsDisplay();
-  /*startQuiz();
-  startExam();*/
 });
