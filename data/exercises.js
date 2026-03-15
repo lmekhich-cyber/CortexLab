@@ -229,7 +229,5 @@ export const EXERCISES =
   question: "Un élève fait un exercice en 12 minutes. Combien d’exercices peut-il faire en 1 heure au même rythme ?",
   answer: "5",
   explanation: "1 heure = 60 minutes. 60 / 12 = 5 exercices."
-},
-
-
+}
 ];
