@@ -1,8 +1,3 @@
-/* =========================================================
-   CORTEXLAB ULTRA – MODULE QUIZ
-   Quiz interactif – 10 questions
-========================================================= */
-
 import { EXERCISES } from "../data/exercises.js";
 
 export const Quiz = {
@@ -34,9 +29,8 @@ export const Quiz = {
 
     const render = () => {
       const q = questions[index];
-
       runBox.innerHTML = `
-        <div class="quiz-question">
+        <div class="card">
           <div class="card-title">${q.type}</div>
           <p class="card-question">${q.question}</p>
           <input id="quizInput" class="quiz-input" placeholder="Ta réponse...">
@@ -45,23 +39,19 @@ export const Quiz = {
           <div class="quiz-progress">Question ${index + 1} / ${questions.length}</div>
         </div>
       `;
-
       document.getElementById("quizValidate").onclick = () => {
         const user = document.getElementById("quizInput").value.trim().toLowerCase();
         const fb = document.getElementById("quizFeedback");
-
         if (!user) {
           fb.textContent = "Entre une réponse.";
           return;
         }
-
         if (user === q.answer.toLowerCase()) {
           fb.textContent = "Correct.";
           score++;
         } else {
           fb.textContent = `Mauvaise réponse. Solution : ${q.answer}`;
         }
-
         setTimeout(() => {
           index++;
           if (index < questions.length) {
