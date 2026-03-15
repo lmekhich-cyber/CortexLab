@@ -11,6 +11,8 @@ import { History } from "./modules/history.js";
 import { Exam } from "./modules/exam.js";
 import { Quiz } from "./modules/quiz.js";
 import { Random } from "./modules/random.js";
+import { Pedago } from "./modules/pedago.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   Training.init();
@@ -18,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   Revision.init();
   Badges.init();
   History.init();
+  Pedago.init(); 
 
   document.getElementById("startExam").onclick = () => Exam.start();
   document.getElementById("startQuiz").onclick = () => Quiz.start();
