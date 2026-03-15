@@ -327,6 +327,6 @@ document.addEventListener("DOMContentLoaded", () => {
   renderExercises(exercises);
   loadDailyChallenge();
   updateStatsDisplay();
-  startQuiz();
-  startExam();
+  /*startQuiz();
+  startExam();*/
 });
