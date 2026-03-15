@@ -1,60 +1,141 @@
 /* =========================================================
    CORTEXLAB ULTRA – MODULE EXAM
-   Examen évolutif (20 questions)
+   Examen chronométré + Tests QI
 ========================================================= */
 
 import { EXERCISES } from "../data/exercises.js";
-import { Adaptive } from "../core/adaptive.js";
-import { XP } from "../core/xp.js";
 
 export const Exam = {
-  start() {
-    const box = document.getElementById("examContainer");
+  init() {
+    this.examContainer = document.getElementById("examContainer");
+    this.qiContainer = document.getElementById("qiContainer");
 
-    const questions = EXERCISES
-      .filter(e => e.difficulty === Adaptive.difficulty)
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 20);
+    if (this.examContainer) this.renderExamIntro();
+    if (this.qiContainer) this.renderQiIntro();
+  },
 
+  renderExamIntro() {
+    this.examContainer.innerHTML = `
+      <div class="card">
+        <div class="card-title">Examen complet</div>
+        <p class="card-question">
+          20 questions mélangées (logique, suites, analogies, mémoire).
+          Réponds dans l’ordre, puis consulte ton score final.
+        </p>
+        <button id="startExamButton" class="btn btn-primary">Lancer l’examen</button>
+        <div id="examRun"></div>
+      </div>
+    `;
+
+    document.getElementById("startExamButton").onclick = () => this.startExam();
+  },
+
+  renderQiIntro() {
+    this.qiContainer.innerHTML = `
+      <div class="card">
+        <div class="card-title">Test de QI – Entraînement</div>
+        <p class="card-question">
+          Sélection d’exercices proches des tests de QI classiques :
+          matrices, suites complexes, analogies, mémoire.
+        </p>
+        <button id="startQiButton" class="btn btn-primary">Lancer un test d’entraînement</button>
+        <div id="qiRun"></div>
+      </div>
+    `;
+
+    document.getElementById("startQiButton").onclick = () => this.startQi();
+  },
+
+  pickRandomExercises(count) {
+    const pool = [...EXERCISES];
+    const out = [];
+    while (out.length < count && pool.length) {
+      const idx = Math.floor(Math.random() * pool.length);
+      out.push(pool.splice(idx, 1)[0]);
+    }
+    return out;
+  },
+
+  startExam() {
+    const runBox = document.getElementById("examRun");
+    if (!runBox) return;
+
+    const questions = this.pickRandomExercises(20);
+    this.runLinearTest(runBox, questions, "Examen terminé");
+  },
+
+  startQi() {
+    const runBox = document.getElementById("qiRun");
+    if (!runBox) return;
+
+    // On privilégie quelques types "QI-like"
+    const qiTypes = ["Suites difficiles", "Suites moyennes", "Matrices logiques", "Analogies", "Logique verbale", "Mémoire"];
+    const pool = EXERCISES.filter(e => qiTypes.includes(e.type));
+    const questions = this.pickRandomExercises.call({ }, 10);
+    // fallback si pool vide
+    const list = pool.length >= 10 ? pool : EXERCISES;
+    const selected = [];
+    const tmp = [...list];
+    while (selected.length < 10 && tmp.length) {
+      const idx = Math.floor(Math.random() * tmp.length);
+      selected.push(tmp.splice(idx, 1)[0]);
+    }
+
+    this.runLinearTest(runBox, selected, "Test d’entraînement terminé");
+  },
+
+  runLinearTest(container, questions, endLabel) {
     let index = 0;
     let score = 0;
 
-    const render = () => {
+    const renderQuestion = () => {
       const q = questions[index];
 
-      box.innerHTML = `
-        <div class="card-title">Question ${index + 1}/20</div>
-        <p>${q.question}</p>
-        <input id="examInput" class="quiz-input">
-        <button id="examSubmit" class="btn btn-primary">Valider</button>
+      container.innerHTML = `
+        <div class="card exam-card">
+          <div class="card-title">${q.type}</div>
+          <p class="card-question">${q.question}</p>
+          <input id="examInput" class="quiz-input" placeholder="Ta réponse...">
+          <button id="examValidate" class="btn btn-primary">Valider</button>
+          <div id="examFeedback" class="feedback"></div>
+          <div class="exam-progress">Question ${index + 1} / ${questions.length}</div>
+        </div>
       `;
 
-      document.getElementById("examSubmit").onclick = () => {
+      document.getElementById("examValidate").onclick = () => {
         const user = document.getElementById("examInput").value.trim().toLowerCase();
+        const fb = document.getElementById("examFeedback");
 
-        if (user === q.answer.toLowerCase()) {
-          score++;
-          Adaptive.success();
-        } else {
-          Adaptive.fail();
+        if (!user) {
+          fb.textContent = "Entre une réponse.";
+          return;
         }
 
-        index++;
-        if (index < 20) render();
-        else finish();
+        if (user === q.answer.toLowerCase()) {
+          fb.textContent = "Correct.";
+          score++;
+        } else {
+          fb.textContent = `Mauvaise réponse. Solution : ${q.answer}`;
+        }
+
+        setTimeout(() => {
+          index++;
+          if (index < questions.length) {
+            renderQuestion();
+          } else {
+            container.innerHTML = `
+              <div class="card exam-card">
+                <div class="card-title">${endLabel}</div>
+                <p class="card-question">
+                  Score : ${score} / ${questions.length}
+                </p>
+              </div>
+            `;
+          }
+        }, 800);
       };
     };
 
-    const finish = () => {
-      XP.value += score * 5;
-      localStorage.setItem("xp", XP.value);
-
-      box.innerHTML = `
-        <h3>Résultat : ${score}/20</h3>
-        <p>${score >= 14 ? "Très bon niveau" : "Continue l'entraînement"}</p>
-      `;
-    };
-
-    render();
+    renderQuestion();
   }
 };
