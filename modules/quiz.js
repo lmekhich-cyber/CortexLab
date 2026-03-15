@@ -1,55 +1,93 @@
 /* =========================================================
    CORTEXLAB ULTRA – MODULE QUIZ
-   Quiz interactif (10 questions)
+   Quiz interactif – 10 questions
 ========================================================= */
 
 import { EXERCISES } from "../data/exercises.js";
-import { XP } from "../core/xp.js";
 
 export const Quiz = {
+  init() {
+    const container = document.getElementById("quizContainer");
+    if (!container) return;
+
+    container.innerHTML = `
+      <div class="card">
+        <div class="card-title">Quiz interactif</div>
+        <p class="card-question">
+          10 questions aléatoires. Réponds, puis découvre ton score.
+        </p>
+        <button id="quizStartButton" class="btn btn-primary">Lancer le quiz</button>
+        <div id="quizRun"></div>
+      </div>
+    `;
+
+    document.getElementById("quizStartButton").onclick = () => this.start();
+  },
+
   start() {
-    const box = document.getElementById("quizContainer");
+    const runBox = document.getElementById("quizRun");
+    if (!runBox) return;
 
-    const questions = [...EXERCISES]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 10);
-
+    const questions = this.pickRandom(10);
     let index = 0;
     let score = 0;
 
     const render = () => {
       const q = questions[index];
 
-      box.innerHTML = `
-        <div class="card-title">Question ${index + 1}/10</div>
-        <p>${q.question}</p>
-        <input id="quizInput" class="quiz-input">
-        <button id="quizSubmit" class="btn btn-primary">Valider</button>
+      runBox.innerHTML = `
+        <div class="quiz-question">
+          <div class="card-title">${q.type}</div>
+          <p class="card-question">${q.question}</p>
+          <input id="quizInput" class="quiz-input" placeholder="Ta réponse...">
+          <button id="quizValidate" class="btn btn-primary">Valider</button>
+          <div id="quizFeedback" class="feedback"></div>
+          <div class="quiz-progress">Question ${index + 1} / ${questions.length}</div>
+        </div>
       `;
 
-      document.getElementById("quizSubmit").onclick = () => {
+      document.getElementById("quizValidate").onclick = () => {
         const user = document.getElementById("quizInput").value.trim().toLowerCase();
+        const fb = document.getElementById("quizFeedback");
 
-        if (user === q.answer.toLowerCase()) score++;
+        if (!user) {
+          fb.textContent = "Entre une réponse.";
+          return;
+        }
 
-        index++;
-        if (index < 10) render();
-        else finish();
+        if (user === q.answer.toLowerCase()) {
+          fb.textContent = "Correct.";
+          score++;
+        } else {
+          fb.textContent = `Mauvaise réponse. Solution : ${q.answer}`;
+        }
+
+        setTimeout(() => {
+          index++;
+          if (index < questions.length) {
+            render();
+          } else {
+            runBox.innerHTML = `
+              <div class="card">
+                <div class="card-title">Quiz terminé</div>
+                <p class="card-question">Score : ${score} / ${questions.length}</p>
+              </div>
+            `;
+          }
+        }, 800);
       };
     };
 
-    const finish = () => {
-      XP.value += score * 3;
-      localStorage.setItem("xp", XP.value);
-
-      box.innerHTML = `
-        <h3>Résultat : ${score}/10</h3>
-        <button id="quizRestart" class="btn btn-primary">Recommencer</button>
-      `;
-
-      document.getElementById("quizRestart").onclick = () => this.start();
-    };
-
     render();
+  },
+
+  pickRandom(count) {
+    const pool = [...EXERCISES];
+    const out = [];
+    while (out.length < count && pool.length) {
+      const idx = Math.floor(Math.random() * pool.length);
+      out.push(pool.splice(idx, 1)[0]);
+    }
+    return out;
   }
 };
