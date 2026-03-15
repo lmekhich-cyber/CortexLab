@@ -1,37 +1,30 @@
-/* Fiches pédagogiques CortexLab Ultra */
+export const Pedago = {
+  init() {
+    const container = document.getElementById("pedagoContainer");
+    if (!container) return;
 
-export const PEDAGO_CARDS = [
-  {
-    id: "logique-intermediaire",
-    title: "Logique intermédiaire (12–16 ans)",
-    subtitle: "Déductions, problèmes verbaux, structuration du raisonnement",
-    content: `
-On commence à travailler la logique verbale, les déductions et les problèmes un peu plus longs.
-L’idée est de structurer ton raisonnement étape par étape, en t’appuyant sur les informations données,
-sans deviner.
-
-<strong>Ce que tu vas travailler :</strong><br>
-– Problèmes de déduction<br>
-– Logigrammes (tableaux de logique)<br>
-– Problèmes de temps & de travail<br>
-
-<strong>Conseil général :</strong> écris toujours les données, coche, barre, et ne conclus que ce qui est garanti.
-`
-  },
-  {
-    id: "logique-avancee",
-    title: "Logique avancée (16+ / adultes)",
-    subtitle: "Tests psychotechniques, concours, entretiens",
-    content: `
-On retrouve ici les grands classiques des tests de logique pour concours, entretiens et tests psychotechniques :
-suites complexes, logique conditionnelle, énigmes.
-
-<strong>Ce que tu vas travailler :</strong><br>
-– Suites numériques complexes<br>
-– Logique conditionnelle (“si… alors…”)<br>
-– Énigmes logiques classiques<br>
-
-<strong>Conseil général :</strong> teste plusieurs hypothèses, note tes essais, et méfie-toi des raisonnements inversés.
-`
+    container.innerHTML = `
+      <div class="card">
+        <div class="card-title">Méthode pour les suites</div>
+        <p class="card-question">
+          Commence par les différences, puis les rapports (×2, ÷3, etc.).
+          Note les écarts sur un brouillon.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-title">Analogies verbales</div>
+        <p class="card-question">
+          Identifie la relation (synonyme, contraire, inclusion, fonction, cause → effet)
+          avant de chercher un mot.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-title">Mémoire & répétition</div>
+        <p class="card-question">
+          Regroupe les éléments par blocs (2–3), répète mentalement, puis reconstruis
+          à l’envers. La visualisation aide beaucoup.
+        </p>
+      </div>
+    `;
   }
-];
+};
