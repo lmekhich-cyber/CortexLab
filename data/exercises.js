@@ -166,4 +166,141 @@ export const EXERCISES = [
     explanation: "Pas de lien direct entre médecin et créatif.",
     difficulty: 2
   }
+  // --- Suites géométriques (formes) ---
+
+{
+  id: 101,
+  type: "Formes géométriques",
+  question: "■ ■ ■ □ □ □ ■ ■ □ □ ?",
+  answer: "■",
+  explanation: "Alternance par blocs de 3 : carré plein (■) puis carré vide (□).",
+  difficulty: 1
+},
+
+{
+  id: 102,
+  type: "Formes géométriques",
+  question: "● ▲ ● ▲ ● ▲ ● ?",
+  answer: "▲",
+  explanation: "Alternance simple cercle / triangle.",
+  difficulty: 1
+},
+
+{
+  id: 103,
+  type: "Formes géométriques",
+  question: "■ ● ■ ● ■ ● ?",
+  answer: "■",
+  explanation: "Alternance carré / cercle.",
+  difficulty: 1
+},
+
+{
+  id: 104,
+  type: "Formes géométriques",
+  question: "● ● ● ○ ○ ○ ● ● ○ ○ ?",
+  answer: "●",
+  explanation: "Blocs de 3 cercles pleins puis 3 cercles vides.",
+  difficulty: 1
+},
+
+{
+  id: 105,
+  type: "Formes géométriques",
+  question: "▲ ▲ ■ ▲ ▲ ■ ▲ ▲ ?",
+  answer: "■",
+  explanation: "Répétition : deux triangles puis un carré.",
+  difficulty: 2
+},
+
+{
+  id: 106,
+  type: "Formes géométriques",
+  question: "● ■ ▲ ● ■ ▲ ● ■ ?",
+  answer: "▲",
+  explanation: "Cycle de 3 formes : cercle → carré → triangle.",
+  difficulty: 2
+},
+
+{
+  id: 107,
+  type: "Formes géométriques",
+  question: "● ● ■ ● ● ■ ● ● ?",
+  answer: "■",
+  explanation: "Deux cercles puis un carré.",
+  difficulty: 2
+},
+
+{
+  id: 108,
+  type: "Formes géométriques",
+  question: "▲ ● ● ▲ ● ● ▲ ● ?",
+  answer: "●",
+  explanation: "Un triangle suivi de deux cercles.",
+  difficulty: 2
+},
+
+{
+  id: 109,
+  type: "Formes géométriques",
+  question: "▲ ▼ ▲ ▼ ▲ ▼ ▲ ?",
+  answer: "▼",
+  explanation: "Alternance triangle haut ▲ / triangle bas ▼.",
+  difficulty: 1
+},
+
+{
+  id: 110,
+  type: "Formes géométriques",
+  question: "■ ▲ ● ■ ▲ ● ■ ▲ ?",
+  answer: "●",
+  explanation: "Cycle de 3 formes : carré → triangle → cercle.",
+  difficulty: 3
+},
+
+{
+  id: 111,
+  type: "Formes géométriques",
+  question: "● ● ● ● ○ ○ ○ ○ ● ● ● ● ?",
+  answer: "○",
+  explanation: "Blocs de 4 cercles pleins puis 4 cercles vides.",
+  difficulty: 2
+},
+
+{
+  id: 112,
+  type: "Formes géométriques",
+  question: "▲ ■ ■ ▲ ■ ■ ▲ ■ ?",
+  answer: "■",
+  explanation: "Un triangle suivi de deux carrés.",
+  difficulty: 2
+},
+
+{
+  id: 113,
+  type: "Formes géométriques",
+  question: "● ▲ ■ ● ▲ ■ ● ▲ ?",
+  answer: "■",
+  explanation: "Cycle de 3 formes, répétition.",
+  difficulty: 3
+},
+
+{
+  id: 114,
+  type: "Formes géométriques",
+  question: "● ● ▲ ● ● ▲ ● ● ?",
+  answer: "▲",
+  explanation: "Deux cercles puis un triangle.",
+  difficulty: 2
+},
+
+{
+  id: 115,
+  type: "Formes géométriques",
+  question: "■ ● ■ ● ● ■ ● ● ■ ● ● ?",
+  answer: "■",
+  explanation: "Motif : carré, cercle, carré, cercle, cercle.",
+  difficulty: 3
+}
+
 ];
