@@ -2,1134 +2,171 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>CortexLab : Atelier de Logique – Tests & Progression</title>
+  <title>CortexLab – Entraîne ton esprit. Dépasse-toi.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    :root {
-      --bg: #050816;
-      --bg-alt: #0b1020;
-      --card: #111827;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.15);
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --danger: #f97373;
-      --success: #4ade80;
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.7);
-      --shadow-chip: 0 10px 25px rgba(15, 23, 42, 0.6);
-      --transition-fast: 0.18s ease-out;
-      --transition-med: 0.25s ease-out;
-      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
-        Consolas, "Liberation Mono", "Courier New", monospace;
-    }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: var(--font-main);
-      background: radial-gradient(circle at top, #1f2937 0, #020617 45%, #000 100%);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 32px 18px 60px;
-    }
-
-    /* Header / Hero */
-
-    header {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      margin-bottom: 32px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(56, 189, 248, 0.18), rgba(129, 140, 248, 0.18));
-      color: var(--accent);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: var(--shadow-chip);
-    }
-
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #f9fafb, #38bdf8);
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
-    }
-
-    h1 {
-      font-size: clamp(2.2rem, 4vw, 2.8rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 10px;
-    }
-
-    h1 span.highlight {
-      background: linear-gradient(120deg, #38bdf8, #a855f7);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero-sub {
-      max-width: 640px;
-      color: var(--muted);
-      font-size: 0.98rem;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.4fr);
-      gap: 22px;
-      align-items: stretch;
-      margin-top: 10px;
-    }
-
-    .hero-panel {
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.12), transparent 55%),
-        var(--bg-alt);
-      border-radius: var(--radius-lg);
-      padding: 18px 18px 16px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top, rgba(248, 250, 252, 0.06), transparent 60%);
-      opacity: 0.7;
-      pointer-events: none;
-    }
-
-    .hero-panel h2 {
-      font-size: 1rem;
-      margin-bottom: 6px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .hero-panel h3 {
-      font-size: 1.25rem;
-      margin-bottom: 10px;
-    }
-
-    .hero-panel p {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .chip {
-      font-size: 0.78rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .chip-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--accent);
-    }
-
-    .hero-cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .btn {
-      border-radius: 999px;
-      padding: 8px 16px;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast),
-        background var(--transition-fast), color var(--transition-fast);
-      font-weight: 500;
-      letter-spacing: 0.02em;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      color: #0b1120;
-      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.55);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 40px rgba(37, 99, 235, 0.7);
-    }
-
-    .btn-ghost {
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--muted);
-      border: 1px solid rgba(148, 163, 184, 0.6);
-    }
-
-    .btn-ghost:hover {
-      background: rgba(15, 23, 42, 1);
-      color: var(--text);
-      transform: translateY(-1px);
-    }
-
-    .hero-mini-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 14px;
-      font-size: 0.78rem;
-    }
-
-    .mini-stat {
-      padding: 8px 10px;
-      border-radius: 12px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .mini-stat span:first-child {
-      color: var(--muted);
-    }
-
-    .mini-stat span:last-child {
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    /* Filters */
-
-    .filters {
-      margin: 26px 0 18px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .filters-left {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .filters-label {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-    }
-
-    .pill-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .pill {
-      font-size: 0.8rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--muted);
-      cursor: pointer;
-      transition: background var(--transition-fast), color var(--transition-fast),
-        border-color var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .pill.active {
-      background: var(--accent-soft);
-      color: var(--accent);
-      border-color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    .filters-right {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    select {
-      background: rgba(15, 23, 42, 0.95);
-      color: var(--text);
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      padding: 4px 10px;
-      font-size: 0.8rem;
-      outline: none;
-      cursor: pointer;
-    }
-
-    /* Sections */
-
-    section {
-      margin-bottom: 26px;
-    }
-
-    section h2 {
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    section h2 span.age-tag {
-      font-size: 0.75rem;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      color: var(--muted);
-    }
-
-    section p.section-intro {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 12px;
-      max-width: 720px;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 14px;
-    }
-
-    /* Cards */
-
-    .card {
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 55%),
-        var(--card);
-      border-radius: var(--radius-md);
-      padding: 14px 14px 12px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.85);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      transition: transform var(--transition-med), box-shadow var(--transition-med),
-        border-color var(--transition-med), background var(--transition-med);
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.95);
-      border-color: rgba(56, 189, 248, 0.7);
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 55%),
-        var(--card);
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      align-items: flex-start;
-    }
-
-    .card-title {
-      font-size: 0.98rem;
-      font-weight: 600;
-    }
-
-    .card-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      justify-content: flex-end;
-    }
-
-    .badge-small {
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      color: var(--muted);
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .badge-diff {
-      border-color: rgba(56, 189, 248, 0.8);
-      color: var(--accent);
-    }
-
-    .card-body {
-      font-size: 0.86rem;
-      color: var(--muted);
-    }
-
-    .card-body p {
-      margin-bottom: 4px;
-    }
-
-    .card-body p:last-child {
-      margin-bottom: 0;
-    }
-
-    .card-example {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      background: rgba(15, 23, 42, 0.9);
-      border-radius: 10px;
-      padding: 8px 9px;
-      margin-top: 6px;
-      border: 1px dashed rgba(148, 163, 184, 0.6);
-      color: #e5e7eb;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 6px;
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    .progress-tip {
-      color: var(--accent);
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 6px;
-    }
-
-    .btn-mini {
-      font-size: 0.75rem;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.95);
-      color: var(--muted);
-      cursor: pointer;
-      transition: background var(--transition-fast), color var(--transition-fast),
-        border-color var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .btn-mini:hover {
-      background: var(--accent-soft);
-      color: var(--accent);
-      border-color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .explanation {
-      margin-top: 6px;
-      font-size: 0.8rem;
-      color: #e5e7eb;
-      border-top: 1px dashed rgba(148, 163, 184, 0.5);
-      padding-top: 6px;
-    }
-
-    .explanation strong {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    /* Footer */
-
-    footer {
-      margin-top: 32px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(31, 41, 55, 0.9);
-      font-size: 0.78rem;
-      color: var(--muted);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    footer span {
-      opacity: 0.9;
-    }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: underline;
-      text-decoration-style: dotted;
-      text-underline-offset: 3px;
-    }
-
-    /* Responsive */
-
-    @media (max-width: 800px) {
-      .hero-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      main {
-        padding: 22px 14px 40px;
-      }
-
-      .hero-mini-stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .filters {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .filters-right {
-        width: 100%;
-        justify-content: space-between;
-      }
-    }
-  </style>
+  <!-- Styles externes -->
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+
+  <!-- NAVIGATION PREMIUM -->
+  <nav class="top-nav">
+    <div class="nav-logo">
+      <div class="logo-title">CortexLab</div>
+      <div class="logo-slogan">Entraîne ton esprit. Dépasse-toi.</div>
+    </div>
+
+    <div class="nav-links">
+      <a href="#entrainement">Entraînement</a>
+      <a href="#parcours">Parcours</a>
+      <a href="#qi">Tests QI</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#examen">Examen</a>
+      <a href="#defi">Défi</a>
+      <a href="#pedagogie">Pédagogie</a>
+    </div>
+  </nav>
+
   <main>
-    <header>
+
+    <!-- HERO PREMIUM -->
+    <header class="hero">
       <div class="badge">
         <span class="badge-dot"></span>
-        <span>Atelier de logique guidé</span>
+        <span>Centre d’entraînement cognitif</span>
       </div>
+
       <h1>
-        Tests de logique
-        <span class="highlight">progressifs</span>
-        pour entraîner ton cerveau
+        Développe ton raisonnement avec
+        <span class="highlight">CortexLab Ultra</span>
       </h1>
+
       <p class="hero-sub">
-        Découvre les tests de logique les plus courants, classés par âge et par difficulté.
-        Chaque carte te donne un exemple concret, une explication et un conseil pour progresser.
+        Un espace premium pour progresser en logique, en raisonnement, en mémoire
+        et en intelligence abstraite. Entraîne-toi chaque jour, mesure tes progrès,
+        et dépasse tes limites.
       </p>
 
-      <div class="hero-grid">
-        <div class="hero-panel">
-          <h2>Par où commencer ?</h2>
-          <h3>Un parcours de logique, pas un simple QCM</h3>
-          <p>
-            Commence par ton niveau d’âge ou de confort, puis augmente progressivement la difficulté.
-            L’objectif n’est pas d’être “bon” tout de suite, mais de comprendre comment tu raisonnes
-            et comment améliorer ta façon de réfléchir.
-          </p>
-          <div class="hero-tags">
-            <div class="chip">
-              <span class="chip-dot"></span>
-              <span>Enfants & ados</span>
-            </div>
-            <div class="chip">
-              <span class="chip-dot"></span>
-              <span>Préparation concours</span>
-            </div>
-            <div class="chip">
-              <span class="chip-dot"></span>
-              <span>Curieux & passionnés</span>
-            </div>
-          </div>
-          <div class="hero-cta">
-            <button class="btn btn-primary" id="btnStartEasy">
-              Commencer niveau facile
-            </button>
-            <button class="btn btn-ghost" id="btnShowAll">
-              Voir tous les types de tests
-            </button>
-          </div>
-          <div class="hero-mini-stats">
-            <div class="mini-stat">
-              <span>Types de tests</span>
-              <span>8 familles clés</span>
-            </div>
-            <div class="mini-stat">
-              <span>Progression</span>
-              <span>3 niveaux</span>
-            </div>
-            <div class="mini-stat">
-              <span>Mode</span>
-              <span>Lecture guidée</span>
-            </div>
-          </div>
-        </div>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" id="startTraining">Commencer l’entraînement</button>
+        <button class="btn btn-ghost" id="startRandom">Exercice aléatoire</button>
+      </div>
 
-        <div class="hero-panel">
-          <h2>Comment progresser ?</h2>
-          <h3>Une méthode simple en 3 étapes</h3>
-          <p>
-            1. Lis l’énoncé sans te précipiter sur la réponse.<br />
-            2. Reformule le problème avec tes mots.<br />
-            3. Compare ta démarche avec l’explication proposée.
-          </p>
-          <p style="margin-top: 8px;">
-            Tu peux revenir régulièrement sur les mêmes types de tests pour voir si ta
-            vitesse et ta clarté de raisonnement s’améliorent.
-          </p>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-label">Exercices</span>
+          <span class="stat-value" id="statExercices">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Sessions</span>
+          <span class="stat-value" id="statSessions">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Score global</span>
+          <span class="stat-value" id="statScore">0</span>
         </div>
       </div>
     </header>
 
-    <!-- Filtres -->
-    <div class="filters">
-      <div class="filters-left">
-        <span class="filters-label">Filtrer par âge</span>
-        <div class="pill-group" id="ageFilters">
-          <button class="pill active" data-age="all">Tous</button>
-          <button class="pill" data-age="8-12">8–12 ans</button>
-          <button class="pill" data-age="12-16">12–16 ans</button>
-          <button class="pill" data-age="16+">16+ / adultes</button>
+    <!-- ENTRAÎNEMENT LIBRE -->
+    <section id="entrainement" class="section">
+      <h2>Entraînement libre</h2>
+      <p class="section-intro">
+        Choisis un type d’exercice ou explore librement. Tous les exercices sont générés automatiquement.
+      </p>
+
+      <!-- Filtres -->
+      <div class="filters">
+        <div class="filters-left">
+          <span class="filters-label">Catégories</span>
+          <div id="categoryFilters" class="pill-group"></div>
+        </div>
+
+        <div class="filters-right">
+          <span>Tri :</span>
+          <select id="sortExercises">
+            <option value="difficulty">Difficulté</option>
+            <option value="type">Type</option>
+            <option value="random">Aléatoire</option>
+          </select>
         </div>
       </div>
-      <div class="filters-right">
-        <span>Tri :</span>
-        <select id="sortSelect">
-          <option value="age">Par âge croissant</option>
-          <option value="difficulty">Par difficulté</option>
-          <option value="type">Par type de test</option>
-        </select>
-      </div>
-    </div>
 
-    <!-- Section 8–12 ans -->
-    <section data-age-group="8-12">
-      <h2>
-        Premiers pas en logique
-        <span class="age-tag">8–12 ans · bases visuelles & suites simples</span>
-      </h2>
-      <p class="section-intro">
-        Ici, on travaille surtout l’observation, les suites simples et les liens évidents.
-        L’objectif est d’apprendre à repérer un motif et à le prolonger.
-      </p>
-      <div class="cards-grid">
-        <!-- Suites logiques simples -->
-        <article class="card" data-age="8-12" data-difficulty="1" data-type="suites">
-          <div class="card-header">
-            <div class="card-title">Suites logiques simples</div>
-            <div class="card-meta">
-              <span class="badge-small badge-diff">Facile</span>
-              <span class="badge-small">Type : Suites</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <p>
-              On te donne une suite de nombres ou de formes, et tu dois trouver le prochain élément.
-              Le but est de repérer la règle qui se cache derrière la suite.
-            </p>
-            <div class="card-example">
-              Exemple : 2, 4, 6, 8, ?<br />
-              → Quel est le nombre suivant ?
-            </div>
-            <div class="explanation hidden">
-              <strong>Explication :</strong> On ajoute toujours 2 au nombre précédent.
-              La suite est donc “+2, +2, +2…”. Le nombre suivant est 10.
-              <br /><br />
-              <strong>Pour progresser :</strong> entraîne-toi à dire à voix haute la règle
-              (“j’ajoute 2 à chaque fois”) avant de donner la réponse.
-            </div>
-          </div>
-          <div class="card-footer">
-            <span class="progress-tip">Conseil : cherche d’abord si la suite augmente ou diminue régulièrement.</span>
-            <div class="card-actions">
-              <button class="btn-mini btn-toggle-explanation">Voir l’explication</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Analogies visuelles -->
-        <article class="card" data-age="8-12" data-difficulty="1" data-type="analogies">
-          <div class="card-header">
-            <div class="card-title">Analogies visuelles</div>
-            <div class="card-meta">
-              <span class="badge-small badge-diff">Facile</span>
-              <span class="badge-small">Type : Analogies</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <p>
-              On compare des images ou des objets : si A est à B comme C est à D,
-              tu dois trouver D. C’est un jeu de “qui ressemble à quoi”.
-            </p>
-            <div class="card-example">
-              Exemple : 🟦 est à 🟥 comme 🔺 est à ?<br />
-              (On passe d’un carré bleu à un carré rouge. On garde la forme, on change la couleur.)
-            </div>
-            <div class="explanation hidden">
-              <strong>Explication :</strong> La relation est “même forme, couleur différente”.
-              On part d’un triangle (🔺), donc on garde la forme triangle et on change la couleur
-              comme pour le carré. Si le carré devient rouge, le triangle devient rouge.
-              <br /><br />
-              <strong>Pour progresser :</strong> décris toujours la transformation avec des mots :
-              “je garde la forme, je change la couleur”, “je tourne la forme”, etc.
-            </div>
-          </div>
-          <div class="card-footer">
-            <span class="progress-tip">Conseil : dis à voix haute ce qui change et ce qui reste identique.</span>
-            <div class="card-actions">
-              <button class="btn-mini btn-toggle-explanation">Voir l’explication</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Classement / catégorisation -->
-        <article class="card" data-age="8-12" data-difficulty="1" data-type="classification">
-          <div class="card-header">
-            <div class="card-title">Classement & catégorisation</div>
-            <div class="card-meta">
-              <span class="badge-small badge-diff">Facile</span>
-              <span class="badge-small">Type : Catégories</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <p>
-              On te donne une liste d’objets, et tu dois trouver celui qui ne va pas avec les autres,
-              ou au contraire ceux qui vont ensemble.
-            </p>
-            <div class="card-example">
-              Exemple : chat – chien – voiture – lapin<br />
-              → Quel est l’intrus ?
-            </div>
-            <div class="explanation hidden">
-              <strong>Explication :</strong> Trois mots désignent des animaux (chat, chien, lapin),
-              un seul désigne un objet (voiture). L’intrus est donc “voiture”.
-              <br /><br />
-              <strong>Pour progresser :</strong> cherche d’abord ce que les éléments ont en commun
-              (vivant / non vivant, animal / objet, etc.).
-            </div>
-          </div>
-          <div class="card-footer">
-            <span class="progress-tip">Conseil : commence par repérer ce qui est commun à la majorité.</span>
-            <div class="card-actions">
-              <button class="btn-mini btn-toggle-explanation">Voir l’explication</button>
-            </div>
-          </div>
-        </article>
-      </div>
+      <!-- Conteneur des exercices -->
+      <div id="exerciseContainer" class="cards-grid"></div>
     </section>
 
-    <!-- Section 12–16 ans -->
-    <section data-age-group="12-16">
-      <h2>
-        Logique intermédiaire
-        <span class="age-tag">12–16 ans · déductions & problèmes verbaux</span>
-      </h2>
+    <!-- PARCOURS PROGRESSIF -->
+    <section id="parcours" class="section">
+      <h2>Parcours progressif</h2>
       <p class="section-intro">
-        On commence à travailler la logique verbale, les déductions et les problèmes un peu plus longs.
-        L’idée est de structurer ton raisonnement étape par étape.
+        Avance niveau par niveau. Chaque niveau débloque le suivant.
       </p>
-      <div class="cards-grid">
-        <!-- Problèmes de déduction -->
-        <article class="card" data-age="12-16" data-difficulty="2" data-type="deduction">
-          <div class="card-header">
-            <div class="card-title">Problèmes de déduction</div>
-            <div class="card-meta">
-              <span class="badge-small badge-diff">Moyen</span>
-              <span class="badge-small">Type : Déduction</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <p>
-              On te donne plusieurs informations, parfois sous forme de phrases.
-              Tu dois en déduire une conclusion logique, sans rien inventer.
-            </p>
-            <div class="card-example">
-              Exemple :<br />
-              – Tous les chats sont des animaux.<br />
-              – Certains animaux sont noirs.<br />
-              → Peut-on conclure que certains chats sont noirs ?
-            </div>
-            <div class="explanation hidden">
-              <strong>Explication :</strong> On sait que tous les chats appartiennent au groupe “animaux”.
-              On sait aussi que certains animaux sont noirs, mais on ne sait pas si ces animaux sont des chats.
-              On ne peut donc pas conclure que certains chats sont noirs : ce serait une déduction abusive.
-              <br /><br />
-              <strong>Pour progresser :</strong> dessine des ensembles (cercles) pour représenter les groupes
-              et vois ce qui est vraiment garanti par les phrases.
-            </div>
-          </div>
-          <div class="card-footer">
-            <span class="progress-tip">Conseil : ne conclus que ce qui est explicitement garanti par les données.</span>
-            <div class="card-actions">
-              <button class="btn-mini btn-toggle-explanation">Voir l’explication</button>
-            </div>
-          </div>
-        </article>
 
-        <!-- Problèmes de type “logigramme” -->
-        <article class="card" data-age="12-16" data-difficulty="2" data-type="logigramme">
-          <div class="card-header">
-            <div class="card-title">Logigrammes (tableaux de logique)</div>
-            <div class="card-meta">
-              <span class="badge-small badge-diff">Moyen</span>
-              <span class="badge-small">Type : Logigramme</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <p>
-              Tu dois retrouver qui fait quoi, où, quand… à partir d’indices.
-              On utilise souvent un tableau pour éliminer les impossibilités.
-            </p>
-            <div class="card-example">
-              Exemple simplifié :<br />
-              Trois amis (Ana, Ben, Léo) ont chacun un animal différent (chat, chien, poisson).<br />
-              – Ana n’a pas de chat.<br />
-              – Ben n’a pas de chien.<br />
-              → Qui a le chien ?
-            </div>
-            <div class="explanation hidden">
-              <strong>Explication :</strong> Si Ana n’a pas de chat, elle peut avoir chien ou poisson.
-              Si Ben n’a pas de chien, il peut avoir chat ou poisson.
-              Il reste Léo : il peut avoir chat, chien ou poisson, mais on doit respecter les contraintes.
-              <br />
-              Si Ben n’a pas de chien, quelqu’un d’autre doit l’avoir. Ana ou Léo.
-              Mais Ana ne peut pas avoir chat, donc si Léo avait le chien, qui aurait le chat ?
-              On voit qu’en répartissant, la seule solution cohérente est :<br />
-              – Ana : chien<br />
-              – Ben : poisson<br />
-              – Léo : chat
-              <br /><br />
-              <strong>Pour progresser :</strong> trace un tableau avec les prénoms en lignes et les animaux en colonnes,
-              puis coche / barre les possibilités.
-            </div>
-          </div>
-          <div class="card-footer">
-            <span class="progress-tip">Conseil : écris toujours les données dans un tableau avant de chercher la solution.</span>
-            <div class="card-actions">
-              <button class="btn-mini btn-toggle-explanation">Voir l’explication</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Problèmes de vitesse / temps / travail -->
-        <article class="card" data-age="12-16" data-difficulty="2" data-type="problemes">
-          <div class="card-header">
-            <div class="card-title">Problèmes de temps & de travail</div>
-            <div class="card-meta">
-              <span class="badge-small badge-diff">Moyen</span>
-              <span class="badge-small">Type : Problèmes</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <p>
-              On te donne des informations sur des durées, des vitesses ou des quantités,
-              et tu dois en déduire un temps ou un résultat.
-            </p>
-            <div class="card-example">
-              Exemple :<br />
-              Une machine remplit un réservoir en 4 heures. Une deuxième machine identique
-              remplit le même réservoir en 4 heures aussi. Combien de temps faut-il si les deux
-              machines fonctionnent ensemble ?
-            </div>
-            <div class="explanation hidden">
-              <strong>Explication :</strong> Une machine remplit 1 réservoir en 4 h, donc en 1 h elle remplit 1/4.
-              Deux machines identiques remplissent donc 1/4 + 1/4 = 1/2 du réservoir en 1 h.
-              Pour remplir 1 réservoir entier, il faut 2 h.
-              <br /><br />
-              <strong>Pour progresser :</strong> pense en “parties de travail par heure” plutôt qu’en temps total.
-            </div>
-          </div>
-          <div class="card-footer">
-            <span class="progress-tip">Conseil : transforme toujours le problème en “combien par unité de temps ?”.</span>
-            <div class="card-actions">
-              <button class="btn-mini btn-toggle-explanation">Voir l’explication</button>
-            </div>
-          </div>
-        </article>
-      </div>
+      <div id="parcoursContainer" class="cards-grid"></div>
     </section>
 
-    <!-- Section 16+ / adultes -->
-    <section data-age-group="16+">
-      <h2>
-        Logique avancée
-        <span class="age-tag">16+ / adultes · concours, tests psychotechniques</span>
-      </h2>
+    <!-- TESTS DE QI -->
+    <section id="qi" class="section">
+      <h2>Tests de QI</h2>
       <p class="section-intro">
-        On retrouve ici les grands classiques des tests de logique pour concours, entretiens
-        et tests psychotechniques : suites complexes, logique conditionnelle, problèmes de type “si… alors…”.
+        Entraîne-toi aux formats classiques : matrices, suites complexes, analogies, mémoire.
       </p>
-      <div class="cards-grid">
-        <!-- Suites numériques complexes -->
-        <article class="card" data-age="16+" data-difficulty="3" data-type="suites">
-          <div class="card-header">
-            <div class="card-title">Suites numériques complexes</div>
-            <div class="card-meta">
-              <span class="badge-small badge-diff">Difficile</span>
-              <span class="badge-small">Type : Suites</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <p>
-              Les suites peuvent combiner plusieurs règles : alternance, multiplication, addition,
-              carrés, cubes, etc. Il faut tester plusieurs hypothèses.
-            </p>
-            <div class="card-example">
-              Exemple : 3, 6, 12, 24, ?<br />
-              → Quel est le nombre suivant ?
-            </div>
-            <div class="explanation hidden">
-              <strong>Explication :</strong> On remarque que chaque terme est le double du précédent :
-              3×2 = 6, 6×2 = 12, 12×2 = 24. La règle est donc “×2 à chaque fois”.
-              Le nombre suivant est 48.
-              <br /><br />
-              <strong>Pour progresser :</strong> teste dans l’ordre : addition constante, multiplication constante,
-              puis combinaisons (×2 + 1, ×3 − 2, etc.).
-            </div>
-          </div>
-          <div class="card-footer">
-            <span class="progress-tip">Conseil : note les différences entre termes, puis les rapports (division).</span>
-            <div class="card-actions">
-              <button class="btn-mini btn-toggle-explanation">Voir l’explication</button>
-            </div>
-          </div>
-        </article>
 
-        <!-- Logique conditionnelle -->
-        <article class="card" data-age="16+" data-difficulty="3" data-type="conditionnelle">
-          <div class="card-header">
-            <div class="card-title">Logique conditionnelle (“si… alors…”)</div>
-            <div class="card-meta">
-              <span class="badge-small badge-diff">Difficile</span>
-              <span class="badge-small">Type : Conditionnelle</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <p>
-              On manipule des phrases du type “si A alors B”. Il faut savoir ce qu’on peut
-              vraiment déduire, et ce qui est une erreur classique de logique.
-            </p>
-            <div class="card-example">
-              Exemple :<br />
-              “Si je travaille régulièrement, alors je progresse en logique.”<br />
-              On observe que tu progresses en logique. Peut-on conclure que tu as travaillé régulièrement ?
-            </div>
-            <div class="explanation hidden">
-              <strong>Explication :</strong> La phrase “si je travaille régulièrement, alors je progresse”
-              ne dit rien sur les autres causes possibles de progression (cours, discussions, etc.).
-              Le fait que tu progresses ne prouve pas que tu as travaillé régulièrement.
-              Ce serait confondre “si A alors B” avec “si B alors A”.
-              <br /><br />
-              <strong>Pour progresser :</strong> écris les phrases sous forme de schéma :
-              A ⇒ B ne signifie pas B ⇒ A.
-            </div>
-          </div>
-          <div class="card-footer">
-            <span class="progress-tip">Conseil : méfie-toi des raisonnements du type “l’inverse doit être vrai”.</span>
-            <div class="card-actions">
-              <button class="btn-mini btn-toggle-explanation">Voir l’explication</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Problèmes de type “énigmes logiques” -->
-        <article class="card" data-age="16+" data-difficulty="3" data-type="enigmes">
-          <div class="card-header">
-            <div class="card-title">Énigmes logiques classiques</div>
-            <div class="card-meta">
-              <span class="badge-small badge-diff">Difficile</span>
-              <span class="badge-small">Type : Énigmes</span>
-            </div>
-          </div>
-          <div class="card-body">
-            <p>
-              Ce sont les énigmes qu’on retrouve souvent en entretien ou en concours :
-              elles testent ta capacité à structurer un raisonnement original.
-            </p>
-            <div class="card-example">
-              Exemple :<br />
-              Tu as deux cordes qui brûlent chacune en exactement 60 minutes,
-              mais de façon non régulière (la moitié de la corde ne brûle pas forcément en 30 minutes).
-              Comment mesurer exactement 45 minutes ?
-            </div>
-            <div class="explanation hidden">
-              <strong>Explication (idée) :</strong><br />
-              1. Allume les deux extrémités de la première corde et une seule extrémité de la deuxième corde.<br />
-              2. La première corde, allumée aux deux bouts, brûle en 30 minutes.<br />
-              3. Quand la première corde est entièrement brûlée (30 min passées), allume l’autre extrémité
-              de la deuxième corde.<br />
-              4. Il reste alors 30 minutes de “matière” sur la deuxième corde, mais elle brûle maintenant
-              par les deux bouts, donc en 15 minutes.<br />
-              5. Au total : 30 + 15 = 45 minutes.
-              <br /><br />
-              <strong>Pour progresser :</strong> cherche toujours à “découper” le temps ou l’espace en parties
-              que tu peux contrôler, même si la vitesse n’est pas régulière.
-            </div>
-          </div>
-          <div class="card-footer">
-            <span class="progress-tip">Conseil : dessine la situation, même si elle semble abstraite.</span>
-            <div class="card-actions">
-              <button class="btn-mini btn-toggle-explanation">Voir l’explication</button>
-            </div>
-          </div>
-        </article>
-      </div>
+      <div id="qiContainer" class="cards-grid"></div>
     </section>
 
-    <footer>
-      <span>Atelier de logique – version statique, idéale pour GitHub Pages.</span>
-      <span>Tu peux enrichir ce site avec tes propres tests et solutions.</span>
-    </footer>
+    <!-- QUIZ INTERACTIF -->
+    <section id="quiz" class="section">
+      <h2>Quiz interactif</h2>
+      <p class="section-intro">
+        10 questions aléatoires. Score immédiat.
+      </p>
+
+      <div id="quizContainer" class="quiz-box"></div>
+    </section>
+
+    <!-- EXAMEN -->
+    <section id="examen" class="section">
+      <h2>Examen chronométré</h2>
+      <p class="section-intro">
+        20 questions, un timer, un score final et une analyse de tes erreurs.
+      </p>
+
+      <div id="examContainer" class="exam-box"></div>
+    </section>
+
+    <!-- DÉFI QUOTIDIEN -->
+    <section id="defi" class="section">
+      <h2>Défi quotidien</h2>
+      <p class="section-intro">
+        Un exercice unique chaque jour. Reviens demain pour le suivant.
+      </p>
+
+      <div id="dailyChallenge" class="card"></div>
+    </section>
+
+    <!-- PÉDAGOGIE -->
+    <section id="pedagogie" class="section">
+      <h2>Comprendre & progresser</h2>
+      <p class="section-intro">
+        Méthodes, conseils, erreurs classiques, stratégies de raisonnement.
+      </p>
+
+      <div id="pedagoContainer" class="cards-grid"></div>
+    </section>
+
   </main>
 
-  <script>
-    // Gestion des filtres par âge
-    const agePills = document.querySelectorAll("#ageFilters .pill");
-    const sections = document.querySelectorAll("section[data-age-group]");
-    const cards = document.querySelectorAll(".card");
+  <footer class="footer">
+    <span>CortexLab Ultra – Version Premium</span>
+    <span>Développé pour progresser chaque jour</span>
+  </footer>
 
-    agePills.forEach((pill) => {
-      pill.addEventListener("click", () => {
-        agePills.forEach((p) => p.classList.remove("active"));
-        pill.classList.add("active");
-        const age = pill.dataset.age;
+  <!-- Script externe -->
+  <script src="script.js"></script>
 
-        if (age === "all") {
-          sections.forEach((sec) => (sec.style.display = ""));
-          cards.forEach((card) => (card.style.display = ""));
-        } else {
-          sections.forEach((sec) => {
-            const group = sec.getAttribute("data-age-group");
-            sec.style.display = group === age ? "" : "none";
-          });
-        }
-      });
-    });
-
-    // Tri des cartes
-    const sortSelect = document.getElementById("sortSelect");
-
-    function sortCards(criteria) {
-      const allSections = document.querySelectorAll("section[data-age-group]");
-      allSections.forEach((section) => {
-        const grid = section.querySelector(".cards-grid");
-        if (!grid) return;
-        const cardsArray = Array.from(grid.querySelectorAll(".card"));
-
-        cardsArray.sort((a, b) => {
-          if (criteria === "difficulty") {
-            const da = parseInt(a.dataset.difficulty, 10);
-            const db = parseInt(b.dataset.difficulty, 10);
-            return da - db;
-          } else if (criteria === "type") {
-            const ta = a.dataset.type.toLowerCase();
-            const tb = b.dataset.type.toLowerCase();
-            return ta.localeCompare(tb);
-          } else {
-            // tri par âge (par défaut, on garde l’ordre actuel dans chaque section)
-            return 0;
-          }
-        });
-
-        cardsArray.forEach((card) => grid.appendChild(card));
-      });
-    }
-
-    sortSelect.addEventListener("change", () => {
-      sortCards(sortSelect.value);
-    });
-
-    // Boutons du hero
-    const btnStartEasy = document.getElementById("btnStartEasy");
-    const btnShowAll = document.getElementById("btnShowAll");
-
-    btnStartEasy.addEventListener("click", () => {
-      // Filtre 8–12
-      agePills.forEach((p) => p.classList.remove("active"));
-      const pill = document.querySelector('[data-age="8-12"]');
-      if (pill) pill.classList.add("active");
-
-      sections.forEach((sec) => {
-        const group = sec.getAttribute("data-age-group");
-        sec.style.display = group === "8-12" ? "" : "none";
-      });
-
-      window.scrollTo({
-        top: document.querySelector('section[data-age-group="8-12"]').offsetTop - 20,
-        behavior: "smooth",
-      });
-    });
-
-    btnShowAll.addEventListener("click", () => {
-      agePills.forEach((p) => p.classList.remove("active"));
-      const pillAll = document.querySelector('[data-age="all"]');
-      if (pillAll) pillAll.classList.add("active");
-      sections.forEach((sec) => (sec.style.display = ""));
-      window.scrollTo({ top: document.body.offsetTop, behavior: "smooth" });
-    });
-
-    // Affichage / masquage des explications
-    const toggleButtons = document.querySelectorAll(".btn-toggle-explanation");
-
-    toggleButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const card = btn.closest(".card");
-        const explanation = card.querySelector(".explanation");
-        if (!explanation) return;
-        const isHidden = explanation.classList.contains("hidden");
-        explanation.classList.toggle("hidden");
-        btn.textContent = isHidden ? "Masquer l’explication" : "Voir l’explication";
-      });
-    });
-  </script>
 </body>
 </html>
