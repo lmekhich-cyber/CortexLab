@@ -165,7 +165,7 @@ export const EXERCISES = [
     answer: "non",
     explanation: "Pas de lien direct entre médecin et créatif.",
     difficulty: 2
-  }
+  },
   // --- Suites géométriques (formes) ---
 
 {
