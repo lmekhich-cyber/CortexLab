@@ -1,51 +1,29 @@
-/* =========================================================
-   CORTEXLAB ULTRA – MODULE XP
-   Gestion de l'expérience gagnée par exercice
-   Calcul des bonus (difficulté, rapidité, variété)
-   Stockage local
-========================================================= */
-
 export const XP = {
-  value: Number(localStorage.getItem("xp") || 0),
-  lastType: null,
-
-  /* ---------------------------------------------------------
-     Calcul XP de base
-  --------------------------------------------------------- */
-  base(difficulty) {
-    return difficulty * 10; // facile = 10, moyen = 20, difficile = 30
+  value: 0,
+  sessions: 0,
+  init() {
+    const stored = localStorage.getItem("xp");
+    const storedSessions = localStorage.getItem("sessions");
+    this.value = stored ? parseInt(stored, 10) : 0;
+    this.sessions = storedSessions ? parseInt(storedSessions, 10) : 0;
+    this.updateStats();
   },
-
-  /* ---------------------------------------------------------
-     Bonus de rapidité
-  --------------------------------------------------------- */
-  speedBonus(timeMs) {
-    if (timeMs < 5000) return 10;   // < 5 sec
-    if (timeMs < 10000) return 5;   // < 10 sec
-    return 0;
-  },
-
-  /* ---------------------------------------------------------
-     Bonus de variété
-  --------------------------------------------------------- */
-  varietyBonus(type) {
-    if (this.lastType && this.lastType !== type) return 5;
-    return 0;
-  },
-
-  /* ---------------------------------------------------------
-     Gain total
-  --------------------------------------------------------- */
-  gain({ difficulty, type, timeMs }) {
-    const total =
-      this.base(difficulty) +
-      this.speedBonus(timeMs) +
-      this.varietyBonus(type);
-
-    this.value += total;
-    this.lastType = type;
-
+  add(points) {
+    this.value += points;
     localStorage.setItem("xp", this.value);
-    return total;
+    this.updateStats();
+  },
+  newSession() {
+    this.sessions += 1;
+    localStorage.setItem("sessions", this.sessions);
+    this.updateStats();
+  },
+  updateStats() {
+    const ex = document.getElementById("statExercices");
+    const ses = document.getElementById("statSessions");
+    const score = document.getElementById("statScore");
+    if (ex) ex.textContent = this.value;
+    if (ses) ses.textContent = this.sessions;
+    if (score) score.textContent = this.value;
   }
 };
